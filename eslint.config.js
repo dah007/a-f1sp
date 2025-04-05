@@ -1,51 +1,28 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import react from "eslint-plugin-react";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default [
-    ...compat.extends(
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-    ).map(config => ({
-        ...config,
-        files: ["**/*.ts", "**/*.tsx"],
-    })),
-    {
-        files: ["**/*.ts", "**/*.tsx"],
-        plugins: {
-            "@typescript-eslint": typescriptEslint,
-            react,
-        },
-        languageOptions: {
-            parser: tsParser,
-            ecmaVersion: 2020,
-            sourceType: "module",
-            globals: {
-                ...globals.browser,
-            },
-        },
-        settings: {
-            react: {
-                version: "detect", // Automatically detect the React version
-            },
-        },
-        rules: {
-            "react/react-in-jsx-scope": "off",
-            "@typescript-eslint/no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
-        },
+export default tseslint.config(
+  { ignores: ['dist'] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
     },
-];
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  },
+)
