@@ -1,16 +1,47 @@
 import { useState, useEffect } from 'react';
 
 function App() {
-    const [data, setData] = useState('');
+    const [, setData] = useState('');
+
+    async function list() {
+        const endpoint = '/data-api/rest/Person';
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        setData(data);
+        console.table(data.value);
+    }
 
     useEffect(() => {
         (async function () {
-            const { text } = await (await fetch(`/api/message`)).json();
-            setData(text);
+            const taco = await (await fetch(`/api/message`)).json();
+            console.log('taco,', taco);
+            setData(taco);
         })();
     }, []);
 
-    return <div>{data}</div>;
+    return (
+        <div style={{ padding: '20px' }}>
+            <h1>Static Web Apps Database Connections</h1>
+            <blockquote>Open the console in the browser developer tools to see the API responses.</blockquote>
+            <div>
+                <button id="list" onClick={list}>
+                    List
+                </button>
+                <button id="get" onClick={() => alert('Get button clicked')}>
+                    Get
+                </button>
+                <button id="update" onClick={() => alert('Update button clicked')}>
+                    Update
+                </button>
+                <button id="create" onClick={() => alert('Create button clicked')}>
+                    Create
+                </button>
+                <button id="delete" onClick={() => alert('Delete button clicked')}>
+                    Delete
+                </button>
+            </div>
+        </div>
+    );
 }
 
 export default App;
