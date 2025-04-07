@@ -7,22 +7,18 @@
     "runtime": {
         "rest": {
             "enabled": true,
-            "path": "/rest"
-        },
-        "graphql": {
-            "allow-introspection": true,
-            "enabled": true,
-            "path": "/graphql"
+            "path": "/rest",
+            "request-body-strict": true
         },
         "host": {
-            "mode": "production",
             "cors": {
                 "origins": ["http://localhost:4280"],
                 "allow-credentials": false
             },
             "authentication": {
                 "provider": "StaticWebApps"
-            }
+            },
+            "mode": "production"
         }
     },
     "entities": {
@@ -32,6 +28,138 @@
                 {
                     "actions": ["*"],
                     "role": "anonymous"
+                }
+            ]
+        },
+
+        "circuits": {
+            "source": {
+                "object": "circuit",
+                "type": "table",
+                "key-fields": ["id"]
+            },
+            "rest": {
+                "enabled": true,
+                "path": "/circuits",
+                "methods": ["get"]
+            },
+            "permissions": [
+                {
+                    "role": "anonymous",
+                    "actions": ["read"]
+                }
+            ]
+        },
+        "constructors": {
+            "source": {
+                "object": "constructor",
+                "type": "table",
+                "key-fields": ["id"]
+            },
+            "rest": {
+                "enabled": true,
+                "path": "/constructors",
+                "methods": ["get"]
+            },
+            "permissions": [
+                {
+                    "role": "anonymous",
+                    "actions": ["read"]
+                }
+            ]
+        },
+
+        "driver-of-day": {
+            "source": {
+                "object": "last-race-driver-day",
+                "type": "view",
+                "key-fields": ["race_id"]
+            },
+            "graphql": {
+                "enabled": true,
+                "type": {
+                    "singular": "driver-of-day",
+                    "plural": "driver-of-days"
+                }
+            },
+            "rest": {
+                "enabled": true,
+                "path": "/driver-of-day",
+                "methods": ["get"]
+            },
+            "permissions": [
+                {
+                    "role": "anonymous",
+                    "actions": ["read"]
+                }
+            ]
+        },
+
+        "driver": {
+            "source": {
+                "object": "driver-get",
+                "parameters": {
+                    "abbreviation": "string",
+                    "id": "string"
+                },
+                "type": "view",
+                "key-fields": ["id"]
+            },
+            "rest": {
+                "enabled": true,
+                "path": "/driver",
+                "methods": ["get"]
+            },
+            "permissions": [
+                {
+                    "role": "anonymous",
+                    "actions": ["read"]
+                }
+            ]
+        },
+
+        "drivers": {
+            "source": {
+                "key-fields": ["id"],
+                "object": "driver",
+                "parameters": {
+                    "abbreviation": "string",
+                    "id": "string"
+                },
+                "type": "table"
+            },
+            "rest": {
+                "enabled": true,
+                "path": "/drivers",
+                "methods": ["get"]
+            },
+            "permissions": [
+                {
+                    "role": "anonymous",
+                    "actions": ["read"]
+                }
+            ]
+        },
+
+        "race-result": {
+            "source": {
+                "object": "race_result",
+                "parameters": {
+                    "race_id": 1127,
+                    "driver_id": "string"
+                },
+                "type": "view",
+                "key-fields": ["race_id", "driver_id"]
+            },
+            "rest": {
+                "enabled": true,
+                "path": "/race-result",
+                "methods": ["get"]
+            },
+            "permissions": [
+                {
+                    "role": "anonymous",
+                    "actions": ["read"]
                 }
             ]
         }

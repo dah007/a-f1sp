@@ -11,6 +11,14 @@ function App() {
         console.table(data.value);
     }
 
+    const drivers = async () => {
+        const endpoint = '/data-api/rest/Driver';
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        setData(data);
+        console.table(data.value);
+    };
+
     useEffect(() => {
         (async function () {
             const taco = await (await fetch(`/api/message`)).json();
@@ -24,6 +32,11 @@ function App() {
             <h1>Static Web Apps Database Connections</h1>
             <blockquote>Open the console in the browser developer tools to see the API responses.</blockquote>
             <div>
+                <h2>Data API</h2>
+                <button id="drivers" onClick={drivers}>
+                    Drivers
+                </button>
+
                 <button id="list" onClick={list}>
                     List
                 </button>
