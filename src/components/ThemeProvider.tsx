@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light' | 'system';
+
 type ThemeProviderProps = {
     children: React.ReactNode;
     defaultTheme?: Theme;
@@ -19,47 +20,35 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-/**
- * ThemeProvider component that manages and provides the theme context to its children.
- *
- * @param {React.ReactNode} children - The child components that will have access to the theme context.
- * @param {string} [defaultTheme="system"] - The default theme to use if no theme is found in localStorage.
- * @param {string} [storageKey="shadcn-ui-theme"] - The key used to store the theme in localStorage.
- * @param {ThemeProviderProps} props - Additional props to be passed to the ThemeProviderContext.Provider.
- *
- * @returns {JSX.Element} The ThemeProvider component with the theme context.
- *
- * @example
- * ```tsx
- * <ThemeProvider defaultTheme="light">
- *   <App />
- * </ThemeProvider>
- * ```
- */
-const ThemeProvider = ({
+export function ThemeProvider({
     children,
     defaultTheme = 'system',
-    storageKey = 'shadcn-ui-theme',
+    storageKey = 'vite-ui-theme',
     ...props
-}: ThemeProviderProps) => {
+}: ThemeProviderProps) {
     const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(storageKey) as Theme) || defaultTheme);
 
     useEffect(() => {
         const root = window.document.documentElement;
+
         root.classList.remove('light', 'dark');
+
         if (theme === 'system') {
             const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            console.log('system theme');
             root.classList.add(systemTheme);
             return;
         }
+
         root.classList.add(theme);
     }, [theme]);
 
     const value = {
         theme,
-        setTheme: (newTheme: Theme) => {
-            localStorage.setItem(storageKey, newTheme);
-            setTheme(newTheme);
+        setTheme: (theme: Theme) => {
+            localStorage.setItem(storageKey, theme);
+            console.log('theme', theme);
+            setTheme(theme);
         },
     };
 
@@ -68,24 +57,12 @@ const ThemeProvider = ({
             {children}
         </ThemeProviderContext.Provider>
     );
+}
+
+export const useTheme = () => {
+    const context = useContext(ThemeProviderContext);
+
+    if (context === undefined) throw new Error('useTheme must be used within a ThemeProvider');
+
+    return context;
 };
-
-/**
- * Custom hook to access the theme context.
- *
- * @returns {ThemeContextType} The current theme context value.
- * @throws {Error} If the hook is used outside of a ThemeProvider.
- *
- * @deprecated
- * @example
- * const theme = useTheme();
- * console.log(theme);
- */
-// const useTheme = (): ThemeProviderState => {
-//     const context = useContext(ThemeProviderContext);
-//     console.log("context", context);
-//     if (context === undefined) throw new Error("useTheme must be used within a ThemeProvider");
-//     return context;
-// };
-
-export { ThemeProvider /*, useTheme*/ };

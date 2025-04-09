@@ -1,0 +1,298 @@
+{
+    "$schema": "https://github.com/Azure/data-api-builder/releases/latest/download/dab.draft.schema.json",
+    "data-source": {
+        "connection-string": "@env('DATABASE_CONNECTION_STRING')",
+        "database-type": "mysql"
+    },
+    "entities": {
+        "circuits": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/circuits"
+            },
+            "mappings": {
+                "type": "TYPE"
+            },
+            "source": {
+                "key-fields": ["id"],
+                "object": "circuit",
+                "parameters": {
+                    "TYPE": "string"
+                },
+                "type": "table"
+            }
+        },
+        "constructors": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/constructors"
+            },
+            "source": {
+                "key-fields": ["id"],
+                "object": "constructor",
+                "type": "table"
+            }
+        },
+        "driver": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/driver"
+            },
+            "source": {
+                "key-fields": ["id"],
+                "object": "driver-get",
+                "parameters": {
+                    "abbreviation": "string",
+                    "id": "string"
+                },
+                "type": "view"
+            }
+        },
+        "driver-of-day": {
+            "graphql": {
+                "enabled": true,
+                "type": {
+                    "plural": "driver-of-days",
+                    "singular": "driver-of-day"
+                }
+            },
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/driver-of-day"
+            },
+            "source": {
+                "key-fields": ["race_id"],
+                "object": "last-race-driver-day",
+                "type": "view"
+            }
+        },
+        "drivers": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/drivers"
+            },
+            "source": {
+                "key-fields": ["id"],
+                "object": "driver",
+                "parameters": {
+                    "abbreviation": "string",
+                    "id": "string"
+                },
+                "type": "table"
+            }
+        },
+        "driver-standings": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/driver-standings"
+            },
+            "source": {
+                "key-fields": ["year"],
+                "object": "driver-standings",
+                "parameters": {
+                    "year": 1127
+                },
+                "type": "view"
+            }
+        },
+        "fastest_lap": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/fastest-lap"
+            },
+
+            "source": {
+                "key-fields": ["race_id"],
+                "parameters": {
+                    "race_id": 1127,
+                    "position": 1
+                },
+                "object": "fastest_lap",
+                "type": "view"
+            }
+        },
+        "race": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "source": {
+                "key-fields": ["id"],
+                "object": "race",
+                "parameters": {
+                    "circuit_id": "string",
+                    "year": "number"
+                },
+                "type": "table"
+            }
+        },
+        "race-last-race-result": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "source": {
+                "key-fields": ["permanent_number"],
+                "object": "race-last-race-result",
+                "type": "view"
+            }
+        },
+        "race-latest-year": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "source": {
+                "key-fields": ["year"],
+                "object": "race-latest-year",
+                "type": "view"
+            }
+        },
+        "race-next": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "source": {
+                "key-fields": ["raceId"],
+                "object": "race-next",
+                "type": "view"
+            }
+        },
+        "race_result": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/race-result"
+            },
+            "source": {
+                "key-fields": ["race_id"],
+                "object": "race-result",
+                "parameters": {
+                    "race_id": "string"
+                },
+                "type": "view"
+            }
+        },
+        "season-points-by-race": {
+            "source": {
+                "object": "season-points-by-race",
+                "parameters": {
+                    "year": 2024,
+                    "raceId": "string"
+                },
+                "type": "view",
+                "key-fields": ["raceId", "year"]
+            },
+            "rest": {
+                "enabled": true,
+                "path": "/season-points-by-race",
+                "methods": ["get"]
+            },
+            "permissions": [
+                {
+                    "role": "anonymous",
+                    "actions": ["read"]
+                }
+            ]
+        },
+        "seasons-total-wins": {
+            "permissions": [
+                {
+                    "actions": ["read"],
+                    "role": "anonymous"
+                }
+            ],
+            "rest": {
+                "enabled": true,
+                "methods": ["get"],
+                "path": "/seasons-total-wins"
+            },
+            "source": {
+                "key-fields": ["year"],
+                "object": "seasons-total-wins",
+                "type": "view"
+            }
+        }
+    },
+    "runtime": {
+        "host": {
+            "authentication": {
+                "provider": "StaticWebApps"
+            },
+            "cors": {
+                "allow-credentials": false,
+                "origins": ["http://localhost:4280", "http://localhost:*", "http://localhost:3101"]
+            },
+            "mode": "production"
+        },
+        "rest": {
+            "enabled": true,
+            "path": "/rest",
+            "request-body-strict": false
+        }
+    }
+}

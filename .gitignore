@@ -25,3 +25,16 @@ dist-ssr
 *.sw?
 
 .env
+*.db
+# src/assets/drivers/**/*
+# src/assets/drivers/*.png
+
+db/data/*
+
+f1sp.sql
+F1Predict.code-workspace
+dbServer/my.cnf
+start.sh
+
+build/*
+build

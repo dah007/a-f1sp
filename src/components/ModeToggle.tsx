@@ -15,17 +15,17 @@ import { useEffect, useState } from 'react';
  *
  * @returns {JSX.Element} A button that toggles the theme between light and dark.
  */
-const ModeToggle = () => {
+const ModeToggle = (): JSX.Element => {
     const [theme, setThemeState] = useState('light');
 
     const setTheme = (newTheme: string) => {
-        localStorage.setItem('shadcn-ui-theme', newTheme);
+        localStorage.setItem('f1sp-ui-theme', newTheme);
         document.documentElement.classList.remove('light', 'dark');
         document.documentElement.classList.add(newTheme);
     };
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem('shadcn-ui-theme') || 'light';
+        const savedTheme = localStorage.getItem('f1sp-ui-theme') || 'light';
         setTheme(savedTheme);
         setThemeState(savedTheme);
     }, []);
@@ -37,7 +37,7 @@ const ModeToggle = () => {
     };
 
     return (
-        <Button variant="outline" size="icon" onClick={toggleTheme}>
+        <Button variant="outline" size="icon" onClick={toggleTheme} data-testid="mode-toggle">
             {theme === 'light' ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
             <span className="sr-only">Toggle theme</span>
         </Button>

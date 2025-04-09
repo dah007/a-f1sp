@@ -1,0 +1,6 @@
+{
+    "watch": ["dbServer"],
+    "ext": "js,mjs,json",
+    "ignore": ["node_modules", "dist", "docker-compose.yml"],
+    "exec": "node --experimental-modules ./dbServer/server.mjs"
+}
