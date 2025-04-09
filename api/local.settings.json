@@ -1,0 +1,8 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "",
+        "FUNCTIONS_WORKER_RUNTIME": "node",
+        "DATABASE_CONNECTION_STRING": "Server=\"f1sp.mysql.database.azure.com\";port=\"3306\";UserID=\"dholmberg\";Password=\"f1spf1rankAZU!\";Database=\"f1sp\";"
+    }
+}
