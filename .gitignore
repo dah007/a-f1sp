@@ -24,10 +24,13 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
+*.env
+f1Api/db/f1sp-9-2.db
+f1Api/db/f1sp.db
+f1Api/f1sp.db
 *.db
-# src/assets/drivers/**/*
-# src/assets/drivers/*.png
+src/assets/drivers/**/*
+src/assets/drivers/*.png
 
 db/data/*
 
