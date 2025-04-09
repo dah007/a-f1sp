@@ -1,13 +1,23 @@
+// const { app } = require('@azure/functions');
+
+// app.http('db_test', {
+//     methods: ['GET', 'POST'],
+//     authLevel: 'anonymous',
+//     handler: async (request, context) => {
+//         context.log(`Http function processed request for url "${request.url}"`);
+
+//         const name = request.query.get('name') || await request.text() || 'world';
+
+//         return { body: `Hello, ${name}!` };
+//     }
+// });
+
 const { app } = require('@azure/functions');
 
-app.http('db_test', {
-    methods: ['GET', 'POST'],
-    authLevel: 'anonymous',
-    handler: async (request, context) => {
-        context.log(`Http function processed request for url "${request.url}"`);
+const { apiRun } = require('../connectionUtils.js');
+const { getDriverOfDay } = require('../queryObjects/driverQueries.js');
 
-        const name = request.query.get('name') || await request.text() || 'world';
-
-        return { body: `Hello, ${name}!` };
-    }
-});
+app.http(
+    'db_test',
+    apiRun(getDriverOfDay)
+);
