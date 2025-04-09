@@ -1,0 +1,144 @@
+body {
+    padding: 1rem;
+    margin: 0%;
+    display: relative;
+}
+
+@media (width >=64rem) {
+    .raceBanner {
+        grid-area: raceBanner;
+    }
+
+    .leftContent {
+        grid-area: leftContent;
+    }
+
+    .standingsGraph {
+        grid-area: standingsGraph;
+    }
+
+    .middleContent {
+        grid-area: middleContent;
+    }
+
+    .rightContent {
+        grid-area: rightContent;
+    }
+
+    div#voteContainer {
+        display: grid;
+        grid-template-rows: 4vh 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (width <=64rem) {
+    .leftContent {
+        flex-direction: column;
+    }
+
+    .standingsGraph {
+        flex-direction: column;
+    }
+
+    .middleContent {
+        flex-direction: column;
+    }
+
+    .rightContent {
+        flex-direction: column;
+    }
+
+    div#voteContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+.driverOfDay {
+    grid-area: driverOfDay;
+}
+
+.forcedHeight75 {
+    height: 75vh;
+}
+
+/* open sourced from Google: https://fonts.google.com/specimen/Racing+Sans+One?query=racing+sans+one */
+.racingFont {
+    font-family: 'Racing Sans One', serif;
+}
+
+.raceNext {
+    grid-column: 1 / span 3;
+    height: 40px;
+}
+
+.right {
+    grid-area: right;
+}
+
+/* team colors */
+.alpine {
+    background-color: #02192b;
+}
+
+.aston-martin {
+    background-color: #002420;
+}
+
+.ferrari {
+    background-color: #ef1a2d;
+}
+
+.hass {
+    background-color: #e6002b;
+}
+
+.mclaren {
+    background-color: #ff8000;
+}
+
+.mercedes {
+    background-color: #00a19b;
+}
+
+.red-bull {
+    background-color: #c0bfbf;
+}
+
+.rb {
+    background-color: #2240ce;
+}
+
+.kick-sauber {
+    background-color: #00e701;
+}
+
+.williams {
+    background-color: #00a0de;
+}
+
+/* end team colors */
+
+.loader {
+    width: 120px;
+    height: 20px;
+    transform: skewX(-45deg);
+    background:
+        linear-gradient(#f03355 0 0) left -30px top 0/30px 20px no-repeat #ccc;
+    animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+    100% {
+        background-position: right -30px top 0
+    }
+}
+
+@keyframes l8 {
+    100% {
+        background-position: -8px 0%, -8px 50%, -8px 100%
+    }
+}

@@ -8,5 +8,7 @@
     "singleQuote": true,
     "tabWidth": 4,
     "trailingComma": "all",
+    "tailwindStylesheet": "./src/styles/App.css",
+    "tailwindConfig": "./tailwind.config.js",
     "useTabs": false
 }

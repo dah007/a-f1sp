@@ -1,0 +1,17 @@
+{
+    "version": "0.2",
+    "ignorePaths": [],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [
+        "dotdr",
+        "hass",
+        "IFNULL",
+        "mclaren",
+        "sauber",
+        "Shadcn",
+        "Suzuka"
+    ],
+    "ignoreWords": [],
+    "import": []
+}
